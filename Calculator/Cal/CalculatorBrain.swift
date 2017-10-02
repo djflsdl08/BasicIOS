@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 class CalculatorBrain {
     
     private var accumulator = 0.0
@@ -43,6 +42,7 @@ class CalculatorBrain {
     }
     
     private var pending : pendingBinaryOperationInfo?
+    private var rememberPending : pendingBinaryOperationInfo?
     
     struct pendingBinaryOperationInfo {
         var binaryFunction : (Double,Double) -> Double
@@ -51,6 +51,7 @@ class CalculatorBrain {
     
     private func executePendingBinaryOperation() {
         if pending != nil {
+            rememberPending = pendingBinaryOperationInfo(binaryFunction : pending!.binaryFunction, firstOperand : accumulator)
             accumulator = pending!.binaryFunction(pending!.firstOperand,accumulator)
             pending = nil
         }
@@ -69,18 +70,33 @@ class CalculatorBrain {
             switch operation {
             case .Constant(let value) :
                 accumulator = value
+                rememberPendingIsNill()
             case .UnariOperation(let function) :
                 accumulator = function(accumulator)
+                rememberPendingIsNill()
             case .BinaryOperation(let function) :
                 executePendingBinaryOperation()
                 pending = pendingBinaryOperationInfo(binaryFunction: function,firstOperand: accumulator)
+                rememberPendingIsNill()
             case .Equals :
+                equals()
                 executePendingBinaryOperation()
             case .Delete :
                 accumulator = 0.0
                 pending = nil
+                rememberPendingIsNill()
             }
         }
+    }
+    
+    func equals() {
+        if rememberPending != nil{
+            accumulator = rememberPending!.binaryFunction(accumulator,rememberPending!.firstOperand)
+        }
+    }
+    
+    func rememberPendingIsNill() {
+        rememberPending = nil
     }
     
     var result : Double {
