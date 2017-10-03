@@ -13,10 +13,17 @@ class ViewController: UIViewController {
     @IBOutlet private weak var display: UILabel!
     
     private var userIsInTheMiddleOfTyping = false
+    private var arithmaticOperation = false
+    private var rememberOperation : String?
     
     @IBAction private func TouchDigit(_ sender: UIButton) {
         let digit = sender.currentTitle!
         //print("touched \(digit) ")
+        arithmaticOperation = false
+        if rememberOperation != nil {
+            brain.performOperation(symbol : rememberOperation!)
+            rememberOperation = nil
+        }
         if userIsInTheMiddleOfTyping {
             display.text! += digit
         } else {
@@ -44,9 +51,15 @@ class ViewController: UIViewController {
         
         userIsInTheMiddleOfTyping = false
         if let currentOperation = sender.currentTitle {
-            brain.performOperation(symbol : currentOperation)
+            switch currentOperation {
+            case "+","−","×","÷" :
+                arithmaticOperation = true
+                rememberOperation = currentOperation
+            default : brain.performOperation(symbol : currentOperation)
+            }
         }
-        
-        displayValue = brain.result
+        if (arithmaticOperation == false) {
+            displayValue = brain.result
+        }
     }
 }
