@@ -33,9 +33,9 @@ class FaceViewController: UIViewController {
             faceView.addGestureRecognizer(happierSwipeGestureRecognizer)
             
             let sadderSwipeGestureRecognizer = UISwipeGestureRecognizer(
-                    target : self,
-                    action : #selector(FaceViewController.decreaseHappiness)
-                )
+                target : self,
+                action : #selector(FaceViewController.decreaseHappiness)
+            )
             sadderSwipeGestureRecognizer.direction = .down
             faceView.addGestureRecognizer(sadderSwipeGestureRecognizer)
             
@@ -66,13 +66,15 @@ class FaceViewController: UIViewController {
     var eyeBrowTilts = [FacialExpression.EyeBrows.Relaxed : 0.5, .Normal : 0.0, .Furrowed : -0.5]
     
     private func updateUI() {
-        switch expression.eyes {
-        case .Open : faceView.eyesOpen = true
-        case .Closed : faceView.eyesOpen = false
-        case .Squinting : faceView.eyesOpen = false
+        if faceView != nil {
+            switch expression.eyes {
+            case .Open : faceView.eyesOpen = true
+            case .Closed : faceView.eyesOpen = false
+            case .Squinting : faceView.eyesOpen = false
+            }
+            faceView.mouthCurvature = mouthCurvatures[expression.mouth] ?? 0.0
+            faceView.eyeBrowTilt = eyeBrowTilts[expression.eyeBrows] ?? 0.0
         }
-        faceView.mouthCurvature = mouthCurvatures[expression.mouth] ?? 0.0
-        faceView.eyeBrowTilt = eyeBrowTilts[expression.eyeBrows] ?? 0.0
     }
 }
 
