@@ -12,10 +12,10 @@ struct DemoURL {
     static let nightView = "https://cdn.pixabay.com/photo/2016/10/24/22/43/dubai-1767540_960_720.jpg"
     
     static let NASA = [
-        "Earth" : "https://www.nasa.gov/sites/default/files/styles/image_card_4x3_ratio/public/thumbnails/image/mississippi_oli_2016336_lrg.jpg",
-        "Plane" : "https://www.nasa.gov/sites/default/files/styles/image_card_4x3_ratio/public/thumbnails/image/afrc2017-0271-13.jpg",
-        "Launch" : "https://www.nasa.gov/sites/default/files/styles/image_card_4x3_ratio/public/thumbnails/image/9460154150_fa5dfb5909_o.jpg",
-        "people" : "https://www.nasa.gov/sites/default/files/styles/image_card_4x3_ratio/public/thumbnails/image/s65-46645.jpg"
+        "Earth" : "https://cdn.pixabay.com/photo/2012/01/09/09/48/earth-11593_960_720.jpg",
+        "Spaceship" : "https://cdn.pixabay.com/photo/2017/09/21/08/17/satellite-2771080_960_720.jpg",
+        "Launch" : "https://cdn.pixabay.com/photo/2012/11/28/11/28/rocket-launch-67723_960_720.jpg",
+        "Astronaut" : "https://cdn.pixabay.com/photo/2012/10/10/10/36/moon-landing-60582_960_720.jpg"
     ]
     
     static func NASAImageNamed(imageName : String?) -> NSURL? {

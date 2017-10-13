@@ -8,12 +8,14 @@
 
 import UIKit
 
-class ImageViewController: UIViewController {
+class ImageViewController: UIViewController,UIScrollViewDelegate {
     
     var imageURL : NSURL? {
         didSet {
             image = nil
-            fetchImage()
+            if view.window != nil {
+                fetchImage()
+            }
         }
     }
     
@@ -21,8 +23,20 @@ class ImageViewController: UIViewController {
     
     private func fetchImage() {
         if let url = imageURL {
-            if let imagedata = NSData(contentsOf : url as URL) {
-                image = UIImage(data : imagedata as Data)
+            spinner?.startAnimating()
+            DispatchQueue.global(qos : .userInitiated).async {
+                let contentOfURL = NSData(contentsOf : url as URL)
+                DispatchQueue.main.async {
+                    if url == self.imageURL {
+                        if let imagedata = contentOfURL {
+                            self.image = UIImage(data : imagedata as Data)
+                        } else {
+                            self.spinner?.stopAnimating()
+                        }
+                    } else {
+                        print("ignored data returned from url \(url)")
+                    }
+                }
             }
         }
     }
@@ -32,7 +46,16 @@ class ImageViewController: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView! {
         didSet {
             scrollView.contentSize = imageView.frame.size
+            scrollView.delegate = self
+            scrollView.minimumZoomScale = 0.03
+            scrollView.maximumZoomScale = 1.0
         }
+    }
+    
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
+    
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return imageView
     }
     
     private var image : UIImage? {
@@ -43,13 +66,20 @@ class ImageViewController: UIViewController {
             imageView.image = newValue
             imageView.sizeToFit()
             scrollView?.contentSize = imageView.frame.size
+            spinner?.stopAnimating()
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if image == nil {
+            fetchImage()
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         scrollView.addSubview(imageView) // view : top of the UIview
-        imageURL = NSURL(string : DemoURL.nightView)
+        //imageURL = NSURL(string : DemoURL.nightView)
     }
 
 }

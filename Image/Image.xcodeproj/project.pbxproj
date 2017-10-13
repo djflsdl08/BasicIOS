@@ -13,6 +13,7 @@
 		3E17CF331F90A52C00A15436 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E17CF311F90A52C00A15436 /* LaunchScreen.storyboard */; };
 		3E17CF3C1F90A5A400A15436 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E17CF3B1F90A5A400A15436 /* ImageViewController.swift */; };
 		3E17CF3E1F90A96500A15436 /* DemoURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E17CF3D1F90A96500A15436 /* DemoURL.swift */; };
+		3E17CF401F90BA1A00A15436 /* NasaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E17CF3F1F90BA1A00A15436 /* NasaViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		3E17CF341F90A52C00A15436 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3E17CF3B1F90A5A400A15436 /* ImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 		3E17CF3D1F90A96500A15436 /* DemoURL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoURL.swift; sourceTree = "<group>"; };
+		3E17CF3F1F90BA1A00A15436 /* NasaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NasaViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 			children = (
 				3E17CF3A1F90A54100A15436 /* Supporting Files */,
 				3E17CF2C1F90A52B00A15436 /* Main.storyboard */,
+				3E17CF3F1F90BA1A00A15436 /* NasaViewController.swift */,
 				3E17CF3B1F90A5A400A15436 /* ImageViewController.swift */,
 				3E17CF3D1F90A96500A15436 /* DemoURL.swift */,
 				3E17CF341F90A52C00A15436 /* Info.plist */,
@@ -148,6 +151,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E17CF3C1F90A5A400A15436 /* ImageViewController.swift in Sources */,
+				3E17CF401F90BA1A00A15436 /* NasaViewController.swift in Sources */,
 				3E17CF291F90A52B00A15436 /* AppDelegate.swift in Sources */,
 				3E17CF3E1F90A96500A15436 /* DemoURL.swift in Sources */,
 			);
