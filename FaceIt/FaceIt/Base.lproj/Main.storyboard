@@ -166,10 +166,10 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Oja-bd-wgc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="600.79999999999995" y="441.22938530734638"/>
+            <point key="canvasLocation" x="796" y="435"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="yAw-jv-LOt"/>
+        <segue reference="tkk-gm-Mll"/>
     </inferredMetricsTieBreakers>
 </document>
