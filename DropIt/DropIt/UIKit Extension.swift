@@ -28,7 +28,7 @@ extension UIColor {
 }
 
 extension CGRect {
-    var min : CGPoint { return CGPoint(x : midX, y : midY) }
+    var mid : CGPoint { return CGPoint(x : midX, y : midY) }
     var upperLeft : CGPoint { return CGPoint(x : minX, y : minY) }
     var lowerLeft : CGPoint { return CGPoint(x : minX, y : maxY) }
     var upperRight : CGPoint { return CGPoint(x : maxX, y : minY) }
