@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreMotion
 
 class DropItView: NamedBezierPathsView, UIDynamicAnimatorDelegate {
     
@@ -26,6 +27,7 @@ class DropItView: NamedBezierPathsView, UIDynamicAnimatorDelegate {
         didSet {
             if animating {
                 animator.addBehavior(dropBehavior)
+                updateRealGravity()
             } else {
                 animator.removeBehavior(dropBehavior)
             }
@@ -35,6 +37,41 @@ class DropItView: NamedBezierPathsView, UIDynamicAnimatorDelegate {
     private struct PathNames {
         static let MiddleBarrier = "Middle Barrier"
         static let Attachment = "Attachment"
+    }
+    
+    var realGravity : Bool = false {
+        didSet {
+            updateRealGravity()
+        }
+    }
+    
+    private let motionManager = CMMotionManager()
+    
+    private func updateRealGravity() {
+        if realGravity {
+            if motionManager.isAccelerometerAvailable && !motionManager.isAccelerometerActive {
+                motionManager.accelerometerUpdateInterval = 0.25
+                motionManager.startAccelerometerUpdates(to: OperationQueue.main) {
+                    [unowned self] (data,error) in
+                    if self.dropBehavior.dynamicAnimator != nil {
+                        if var dropX = data?.acceleration.x, var dropY = data?.acceleration.y {
+                            switch UIDevice.current.orientation {
+                                case .portrait : dropY = -dropY
+                                case .portraitUpsideDown : break
+                                case .landscapeLeft : swap(&dropX, &dropY); dropY = -dropY
+                                case .landscapeRight : swap(&dropX, &dropY)
+                                default : dropX = 0; dropY = 0
+                            }
+                            self.dropBehavior.gravity.gravityDirection = CGVector(dx : dropX,dy : dropY)
+                        }
+                    } else {
+                        self.motionManager.stopAccelerometerUpdates()
+                    }
+                }
+            }
+        } else {
+            motionManager.stopAccelerometerUpdates()
+        }
     }
     
     private var attachment : UIAttachmentBehavior? {
