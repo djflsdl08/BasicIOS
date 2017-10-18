@@ -13,7 +13,6 @@ class ViewController: UIViewController, UITextFieldDelegate,
 
     //MARK : Properties
     @IBOutlet weak var nameTextField: UITextField!
-    @IBOutlet weak var mealNameLabel: UILabel!
     @IBOutlet weak var phtoImageView: UIImageView!
     @IBOutlet weak var RatingControl: RatingControl!
     
@@ -30,7 +29,7 @@ class ViewController: UIViewController, UITextFieldDelegate,
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        mealNameLabel.text = textField.text
+
     }
     
     //MARK : Actions
