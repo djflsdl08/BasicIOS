@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MealViewController.swift
 //  FoodTracker
 //
 //  Created by 김예진 on 2017. 10. 17..
@@ -7,18 +7,23 @@
 //
 
 import UIKit
+import os.log
 
-class ViewController: UIViewController, UITextFieldDelegate,
+class MealViewController: UIViewController, UITextFieldDelegate,
     UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 
     //MARK : Properties
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var phtoImageView: UIImageView!
     @IBOutlet weak var RatingControl: RatingControl!
+    @IBOutlet weak var saveButton: UIBarButtonItem!
+    
+    var meal : Meal?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         nameTextField.delegate = self
+        updateSaveButtonState()
     }
 
     //MARK : UITextFieldDelegate
@@ -28,8 +33,34 @@ class ViewController: UIViewController, UITextFieldDelegate,
         return true
     }
     
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        // Disable the Save button while editing
+        saveButton.isEnabled = false
+    }
+    
     func textFieldDidEndEditing(_ textField: UITextField) {
-
+        updateSaveButtonState()
+        navigationItem.title = textField.text
+    }
+    
+    //MARK: Navigation
+    @IBAction func cancel(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    override func prepare(for segue : UIStoryboardSegue, sender: Any?) {
+        // This method lets you configure a view controller before it's presented.
+        super.prepare(for: segue, sender : sender)
+        guard let button = sender as? UIBarButtonItem, button === saveButton else {
+            os_log("The save button was not pressed, cancelling", log : OSLog.default, type : .debug)
+            return
+        }
+        
+        let name = nameTextField.text ?? ""
+        let photo = phtoImageView.image
+        let rating = RatingControl.rating
+        
+        meal = Meal(name : name, photo : photo, rating : rating)
     }
     
     //MARK : Actions
@@ -53,6 +84,13 @@ class ViewController: UIViewController, UITextFieldDelegate,
         }
         phtoImageView.image = selectedImage
         dismiss(animated : true, completion : nil)
+    }
+    
+    //MARK: Private methods
+    private func updateSaveButtonState() {
+        // Disable the Save button if the text field is empty
+        let text = nameTextField.text ?? ""
+        saveButton.isEnabled = !text.isEmpty
     }
 }
 

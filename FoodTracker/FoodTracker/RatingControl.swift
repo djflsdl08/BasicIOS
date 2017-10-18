@@ -90,7 +90,7 @@ import UIKit
         
         let selectedRating = index + 1
         
-        print("rating : \(rating), selectedRating : \(selectedRating)")
+     // print("rating : \(rating), selectedRating : \(selectedRating)")
         
         if selectedRating == rating {
             rating = 0
@@ -98,7 +98,7 @@ import UIKit
             rating = selectedRating
         }
         
-        print("rating : \(rating), selectedRating : \(selectedRating)")
+     // print("rating : \(rating), selectedRating : \(selectedRating)")
     }
     
     private func updateButtonSelectionStates() {
