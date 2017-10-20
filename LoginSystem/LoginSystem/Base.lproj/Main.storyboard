@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="F7a-Eo-ZmO">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Login View Controller-->
+        <scene sceneID="0bW-4F-Tt2">
+            <objects>
+                <viewController id="F7a-Eo-ZmO" customClass="LoginViewController" customModule="LoginSystem" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="vBi-2X-LNe"/>
+                        <viewControllerLayoutGuide type="bottom" id="qvn-hg-52t"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="BhZ-ch-M8S">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Bear" translatesAutoresizingMaskIntoConstraints="NO" id="iwd-lO-6x2">
+                                <rect key="frame" x="107" y="106" width="160" height="125"/>
+                            </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="1C9-UX-5ga">
+                                <rect key="frame" x="69" y="299" width="238" height="70"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="ID" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BoG-wA-GoS">
+                                        <rect key="frame" x="0.0" y="0.0" width="238" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qgT-uK-ort">
+                                        <rect key="frame" x="0.0" y="40" width="238" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="230" id="4Se-NR-RyC"/>
+                                </constraints>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="S3q-BQ-WH2">
+                                <rect key="frame" x="76" y="382" width="223" height="30"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U92-xl-0Mu">
+                                        <rect key="frame" x="0.0" y="0.0" width="86.5" height="30"/>
+                                        <state key="normal" title="Sign In">
+                                            <color key="titleColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xjn-lU-vHL">
+                                        <rect key="frame" x="136.5" y="0.0" width="86.5" height="30"/>
+                                        <state key="normal" title="Sign Up">
+                                            <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="1C9-UX-5ga" firstAttribute="centerY" secondItem="BhZ-ch-M8S" secondAttribute="centerY" id="1ig-EN-6JN"/>
+                            <constraint firstItem="iwd-lO-6x2" firstAttribute="top" secondItem="vBi-2X-LNe" secondAttribute="bottom" constant="40" id="2GD-1l-vD6"/>
+                            <constraint firstItem="S3q-BQ-WH2" firstAttribute="top" secondItem="1C9-UX-5ga" secondAttribute="bottom" constant="13" id="GO2-Nm-eo9"/>
+                            <constraint firstItem="iwd-lO-6x2" firstAttribute="centerX" secondItem="S3q-BQ-WH2" secondAttribute="centerX" id="HLL-at-SAm"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="S3q-BQ-WH2" secondAttribute="trailing" constant="60" id="N7M-gU-tOi"/>
+                            <constraint firstItem="1C9-UX-5ga" firstAttribute="leading" secondItem="BhZ-ch-M8S" secondAttribute="leadingMargin" constant="52.5" id="Nfo-pl-eTJ"/>
+                            <constraint firstItem="S3q-BQ-WH2" firstAttribute="leading" secondItem="BhZ-ch-M8S" secondAttribute="leadingMargin" constant="60" id="Ruf-SF-4tS"/>
+                            <constraint firstItem="1C9-UX-5ga" firstAttribute="centerX" secondItem="BhZ-ch-M8S" secondAttribute="centerX" id="ZgO-pL-cCo"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="1C9-UX-5ga" secondAttribute="trailing" constant="52.5" id="bfz-H8-7pK"/>
+                            <constraint firstItem="S3q-BQ-WH2" firstAttribute="centerX" secondItem="BhZ-ch-M8S" secondAttribute="centerX" id="ebf-eU-QkQ"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Iyg-a8-0tu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-55.200000000000003" y="180.35982008995504"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Bear" width="160" height="125"/>
+    </resources>
+</document>
