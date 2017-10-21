@@ -12,6 +12,7 @@
 		3E6CC1BA1F99B83F003599B7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E6CC1B91F99B83F003599B7 /* Assets.xcassets */; };
 		3E6CC1BD1F99B83F003599B7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E6CC1BB1F99B83F003599B7 /* LaunchScreen.storyboard */; };
 		3E6CC1C51F99B88A003599B7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6CC1C41F99B88A003599B7 /* LoginViewController.swift */; };
+		3E6CC1C71F9B4A79003599B7 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6CC1C61F9B4A79003599B7 /* SignUpViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		3E6CC1BC1F99B83F003599B7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3E6CC1BE1F99B83F003599B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3E6CC1C41F99B88A003599B7 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		3E6CC1C61F9B4A79003599B7 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +59,7 @@
 				3E6CC1B21F99B83F003599B7 /* AppDelegate.swift */,
 				3E6CC1C41F99B88A003599B7 /* LoginViewController.swift */,
 				3E6CC1B61F99B83F003599B7 /* Main.storyboard */,
+				3E6CC1C61F9B4A79003599B7 /* SignUpViewController.swift */,
 				3E6CC1B91F99B83F003599B7 /* Assets.xcassets */,
 				3E6CC1BB1F99B83F003599B7 /* LaunchScreen.storyboard */,
 				3E6CC1BE1F99B83F003599B7 /* Info.plist */,
@@ -136,6 +139,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E6CC1C71F9B4A79003599B7 /* SignUpViewController.swift in Sources */,
 				3E6CC1C51F99B88A003599B7 /* LoginViewController.swift in Sources */,
 				3E6CC1B31F99B83F003599B7 /* AppDelegate.swift in Sources */,
 			);
