@@ -9,7 +9,7 @@
 import UIKit
 
 class SignUpViewController: UIViewController, UIImagePickerControllerDelegate,
-    UINavigationControllerDelegate, UITextFieldDelegate {
+    UINavigationControllerDelegate, UITextFieldDelegate, UITextViewDelegate {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var Id: UITextField!
@@ -19,13 +19,9 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate,
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        password.delegate = self
+        checkPassword.delegate = self
+        textView.delegate = self
     }
     
 
@@ -43,8 +39,17 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate,
     }
     */
     
-    //MARK : Actions
+    //MARK: UITextFieldDelegate
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        //Hide the keyboard.
+        password.resignFirstResponder()
+        checkPassword.resignFirstResponder()
+        textView.resignFirstResponder()
+        
+        return true
+    }
     
+    //MARK : Actions
     @IBAction func selectImageFromPhotoLibrary(_ sender: UITapGestureRecognizer) {
         //Hide the keyboard.
         password.resignFirstResponder()
@@ -53,6 +58,7 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate,
         
         let imagePickerController = UIImagePickerController()
         imagePickerController.sourceType = .photoLibrary
+        imagePickerController.allowsEditing = true
         imagePickerController.delegate = self
         present(imagePickerController, animated: true, completion: nil)
     }
@@ -67,5 +73,6 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate,
             fatalError("Expected a dictionary containing an image, but was provided the following: \(info)")
         }
         imageView.image = selectedImage
+        dismiss(animated: true, completion: nil)
     }
 }
