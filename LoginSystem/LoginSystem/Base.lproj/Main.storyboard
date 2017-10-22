@@ -171,6 +171,9 @@
                                                 <state key="normal" title="Sign Up">
                                                     <color key="titleColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="signUp:" destination="90R-sp-PvZ" eventType="touchUpInside" id="Ry2-zy-fGL"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -178,6 +181,7 @@
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="C87-NA-mXh" firstAttribute="centerX" secondItem="fNm-bk-pna" secondAttribute="centerX" id="ELQ-fd-J7I"/>
                             <constraint firstAttribute="leadingMargin" secondItem="C87-NA-mXh" secondAttribute="leading" id="b7F-uW-ab8"/>
@@ -186,6 +190,9 @@
                             <constraint firstItem="C87-NA-mXh" firstAttribute="top" secondItem="ltu-Y9-hr7" secondAttribute="bottom" constant="-1" id="jHP-cC-iGx"/>
                             <constraint firstAttribute="trailingMargin" secondItem="C87-NA-mXh" secondAttribute="trailing" id="oDB-On-k9y"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="ZiQ-Lp-YVf" appends="YES" id="feh-b5-i9L"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="Id" destination="djX-GW-gWc" id="gBM-mv-YXD"/>
@@ -199,6 +206,11 @@
                 <tapGestureRecognizer id="4t0-lX-ubv">
                     <connections>
                         <action selector="selectImageFromPhotoLibrary:" destination="90R-sp-PvZ" id="tOy-FI-BmS"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="ZiQ-Lp-YVf">
+                    <connections>
+                        <action selector="background:" destination="90R-sp-PvZ" id="d0h-4f-siw"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>

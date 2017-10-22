@@ -19,16 +19,48 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate,
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        Id.delegate = self
         password.delegate = self
         checkPassword.delegate = self
         textView.delegate = self
     }
     
-
     
     // MARK: - Navigation
     @IBAction func cancel(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func signUp(_ sender: UIButton) {
+        if let id = Id.text, let password = password.text,
+            let checkPassword = checkPassword.text {
+
+            if(id.isEmpty || password.isEmpty || checkPassword.isEmpty) {
+                var artMsg = "Input the "
+                
+                if(id.isEmpty) {
+                    artMsg += "ID"
+                } else if(password.isEmpty) {
+                    artMsg += "Password"
+                } else if(checkPassword.isEmpty) {
+                    artMsg += "check Password"
+                }
+                
+                let alert = UIAlertController(title: "Fail to signup", message: artMsg, preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+                return
+            }
+            
+            if password == checkPassword {
+                dismiss(animated: true, completion: nil)
+            } else {
+                let checkPasswordAlert = UIAlertController(title: "Password do not match", message : "Check your password", preferredStyle : UIAlertControllerStyle.alert)
+                checkPasswordAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                self.present(checkPasswordAlert, animated: true, completion : nil)
+                return
+            }
+        }
     }
     
     /*
@@ -39,22 +71,21 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate,
     }
     */
     
+    //MARK: UITextViewDelegate
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        return true
+    }
+    
     //MARK: UITextFieldDelegate
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        //Hide the keyboard.
-        password.resignFirstResponder()
-        checkPassword.resignFirstResponder()
-        textView.resignFirstResponder()
+        textField.resignFirstResponder()
         
         return true
     }
     
     //MARK : Actions
     @IBAction func selectImageFromPhotoLibrary(_ sender: UITapGestureRecognizer) {
-        //Hide the keyboard.
-        password.resignFirstResponder()
-        checkPassword.resignFirstResponder()
-        textView.resignFirstResponder()
+        hideTheKeyboard()
         
         let imagePickerController = UIImagePickerController()
         imagePickerController.sourceType = .photoLibrary
@@ -69,10 +100,23 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate,
     }
     
     func imagePickerController(_ picker : UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        self.view.endEditing(true)
         guard let selectedImage = info[UIImagePickerControllerOriginalImage] as? UIImage else {
             fatalError("Expected a dictionary containing an image, but was provided the following: \(info)")
         }
         imageView.image = selectedImage
         dismiss(animated: true, completion: nil)
+    }
+    
+    //MARK: When user clicks the background, keyboard will be disappear.
+    @IBAction func background(_ sender: UITapGestureRecognizer) {
+        hideTheKeyboard()
+    }
+    
+    func hideTheKeyboard() {
+        Id.resignFirstResponder()
+        password.resignFirstResponder()
+        checkPassword.resignFirstResponder()
+        textView.resignFirstResponder()
     }
 }
