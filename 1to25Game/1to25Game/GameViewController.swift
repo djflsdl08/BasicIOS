@@ -9,11 +9,15 @@
 import UIKit
 
 class GameViewController: UIViewController {
-
+    
+    //MARK : Properties
+    @IBOutlet weak var pressToStart: UIButton!
+    @IBOutlet weak var highestScore: UILabel!
+    @IBOutlet weak var currentRecord: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        view.backgroundColor = .white
     }
 
     override func didReceiveMemoryWarning() {
@@ -31,5 +35,10 @@ class GameViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+    
+    //MARK: Actions.
+    
+    @IBAction func DisappearTheCover(_ sender: UIButton) {
+        pressToStart.removeFromSuperview()
+    }
 }

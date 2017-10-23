@@ -9,7 +9,7 @@
 import UIKit
 
 class HistoryViewController: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -32,4 +32,10 @@ class HistoryViewController: UIViewController {
     }
     */
 
+    
+    // MARK: Actions
+    
+    @IBAction func CloseButton(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
+    }
 }
