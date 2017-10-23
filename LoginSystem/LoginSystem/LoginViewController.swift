@@ -10,6 +10,7 @@ import UIKit
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
 
+    // Using keychain, protect the security.
     
     @IBOutlet weak var Id: UITextField!
     @IBOutlet weak var Password: UITextField!

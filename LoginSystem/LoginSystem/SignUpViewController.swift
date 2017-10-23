@@ -25,7 +25,6 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate,
         textView.delegate = self
     }
     
-    
     // MARK: - Navigation
     @IBAction func cancel(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
