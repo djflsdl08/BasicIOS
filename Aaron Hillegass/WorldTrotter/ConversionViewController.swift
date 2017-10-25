@@ -14,6 +14,27 @@ class ConversionViewController : UIViewController, UITextFieldDelegate {
     @IBOutlet weak var celsiusLabel: UILabel!
     @IBOutlet weak var textField: UITextField!
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // print("ConversionViewController loaded its view.")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        let date = NSDate()
+        let current = Calendar.current
+        let hour = current.component(.hour, from: date as Date)
+        
+        // print(hour) -> 0 ~ 24
+        
+        if hour >= 6 && hour < 18 { // Day
+            view.backgroundColor = UIColor.yellow
+        } else {    // night
+            view.backgroundColor = UIColor.brown
+        }
+    }
+    
     var fahrenheitValue : Double? {
         didSet {
             updateCelsiusLabel()
