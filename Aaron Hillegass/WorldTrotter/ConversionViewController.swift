@@ -29,9 +29,9 @@ class ConversionViewController : UIViewController, UITextFieldDelegate {
         // print(hour) -> 0 ~ 24
         
         if hour >= 6 && hour < 18 { // Day
-            view.backgroundColor = UIColor.yellow
+            view.backgroundColor = UIColor(red: 254/255, green: 253/255, blue: 137/255, alpha: 1.0)
         } else {    // night
-            view.backgroundColor = UIColor.brown
+            view.backgroundColor = UIColor(red: 101/255, green: 100/255, blue: 125/255, alpha: 1.0)
         }
     }
     
