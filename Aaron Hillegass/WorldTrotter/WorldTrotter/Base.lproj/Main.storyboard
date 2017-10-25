@@ -74,7 +74,7 @@
                             <outletCollection property="gestureRecognizers" destination="Uh4-6m-4Mc" appends="YES" id="Adg-5j-dJA"/>
                         </connections>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Convert" image="Convertlcon" id="fxs-kE-H5A"/>
+                    <tabBarItem key="tabBarItem" title="Convert" image="ConvertIcon" id="fxs-kE-H5A"/>
                     <connections>
                         <outlet property="celsiusLabel" destination="U99-An-XWM" id="BWZ-bM-FZb"/>
                         <outlet property="textField" destination="DDh-IH-OBD" id="6YY-nT-Z5y"/>
@@ -87,17 +87,35 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="559" y="-162"/>
+            <point key="canvasLocation" x="558" y="-369"/>
+        </scene>
+        <!--Web-->
+        <scene sceneID="R4n-aM-2KG">
+            <objects>
+                <viewController id="YlI-pl-FTk" customClass="WebViewController" customModule="WorldTrotter" customModuleProvider="target" sceneMemberID="viewController">
+                    <webView key="view" contentMode="scaleToFill" id="PFT-6O-Tb3">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </webView>
+                    <tabBarItem key="tabBarItem" title="Web" id="CMb-vb-Bjc"/>
+                    <connections>
+                        <outlet property="webView" destination="PFT-6O-Tb3" id="a8E-wM-xNx"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="75T-cn-iex" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1271" y="150"/>
         </scene>
         <!--Map-->
         <scene sceneID="1Wg-nq-Kcu">
             <objects>
                 <viewController id="Abv-aD-9QQ" customClass="MapViewController" customModule="WorldTrotter" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Map" image="Maplcon" id="e6c-gZ-TvV"/>
+                    <tabBarItem key="tabBarItem" title="Map" image="MapIcon" id="e6c-gZ-TvV"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q1G-ki-efW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="559" y="497"/>
+            <point key="canvasLocation" x="558" y="699"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="bbG-1p-70W">
@@ -112,6 +130,7 @@
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="Is9-SH-YrV"/>
                         <segue destination="Abv-aD-9QQ" kind="relationship" relationship="viewControllers" id="3ua-TR-Mqa"/>
+                        <segue destination="YlI-pl-FTk" kind="relationship" relationship="viewControllers" id="AeQ-OP-YRJ"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hEe-nL-eUV" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -120,7 +139,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Convertlcon" width="48" height="32"/>
-        <image name="Maplcon" width="48" height="32"/>
+        <image name="ConvertIcon" width="48" height="32"/>
+        <image name="MapIcon" width="48" height="32"/>
     </resources>
 </document>
