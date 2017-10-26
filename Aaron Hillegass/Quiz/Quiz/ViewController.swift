@@ -71,7 +71,9 @@ class ViewController: UIViewController {
         UIView.animate (
             withDuration: 0.5,
             delay : 0,  // How long the system waits before the animation starts
-            options : [],
+                //usingSpringWithDamping: 0.5,
+                //initialSpringVelocity: 0.5,  -> Spring Animation
+            options : [.curveLinear],
             animations: {
                 self.currentQuestionLabel.alpha = 0
                 self.nextQuestionLabel.alpha = 1
