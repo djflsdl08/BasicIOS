@@ -9,23 +9,23 @@
 import UIKit
 
 class ItemsTableViewController: UITableViewController {
-
+    
     var itemStore : ItemStore!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         let statusBarHeight = UIApplication.shared.statusBarFrame.height
         
         let insets = UIEdgeInsets(top: statusBarHeight, left: 0, bottom: 0, right: 0)
         tableView.contentInset = insets     // contentInset is like a padding.
         tableView.scrollIndicatorInsets = insets
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return (itemStore.allItems.count + 1)
     }
-
+    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
