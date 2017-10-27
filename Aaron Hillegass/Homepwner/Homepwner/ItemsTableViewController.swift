@@ -70,14 +70,16 @@ class ItemsTableViewController: UITableViewController {
             cell.nameLabel.text = item.name
             cell.serialNumberLabel.text = item.serialNumber
             cell.valueLabel.text = "$\(item.valueInDollars)"
-            
+        
+            /*
             // Bronze Task
             if item.valueInDollars < 50 {
                 cell.backgroundColor = UIColor.green
             } else {
                 cell.backgroundColor = UIColor.red
             }
-            
+            */
+ 
             // Change the font size.
             //cell.textLabel?.font = cell.textLabel?.font.withSize(20)
             //cell.detailTextLabel?.font = cell.detailTextLabel?.font.withSize(20)
@@ -104,19 +106,6 @@ class ItemsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            /*if isEqualToAllItemsCount(row: indexPath.row) {
-                let alert = UIAlertController (
-                    title: "Information",
-                    message: "You can't delete this row.",
-                    preferredStyle: UIAlertControllerStyle.alert
-                    )
-                let okAction = UIAlertAction (
-                    title: "OK",
-                    style: UIAlertActionStyle.default
-                    )
-                alert.addAction(okAction)
-                present(alert, animated: true, completion: nil)
-            } else {*/
             let item = itemStore.allItems[indexPath.row]
             
             let title = "Delete \(item.name)"
@@ -160,20 +149,6 @@ class ItemsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath)  {
-        /*
-        if isEqualToAllItemsCount(row: destinationIndexPath.row) || isEqualToAllItemsCount(row: sourceIndexPath.row) {
-            let alert = UIAlertController (
-                title: "Information",
-                message: "The last line is always 'No more items!' So you can't move this.",
-                preferredStyle: .alert
-            )
-            let okAction = UIAlertAction (
-                title: "OK",
-                style: UIAlertActionStyle.default
-            )
-            alert.addAction(okAction)
-            present(alert, animated: true, completion: nil)
-        } else {*/
         itemStore.moveItemAtIndex(fromIndex: sourceIndexPath.row, toIndex: destinationIndexPath.row)
     }
     
@@ -189,9 +164,32 @@ class ItemsTableViewController: UITableViewController {
         }
     }
     
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        if identifier == "ShowItem" {
+            if let row = tableView.indexPathForSelectedRow?.row {
+                if isEqualToAllItemsCount(row: row) {
+                    let alert = UIAlertController (
+                        title: "Information",
+                        message: "The last line doesn't have any details.",
+                        preferredStyle: .alert
+                    )
+                    let okAction = UIAlertAction (
+                        title: "OK",
+                        style: UIAlertActionStyle.default
+                    )
+                    alert.addAction(okAction)
+                    present(alert, animated: true, completion: nil)
+                    return false
+                }
+            }
+        }
+        return true
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowItem" {
             if let row = tableView.indexPathForSelectedRow?.row {
+                
                 let item = itemStore.allItems[row]
                 let detailViewController = segue.destination as! DetailViewController
                 detailViewController.item = item
