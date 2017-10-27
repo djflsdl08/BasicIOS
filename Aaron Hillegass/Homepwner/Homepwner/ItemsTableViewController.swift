@@ -42,6 +42,10 @@ class ItemsTableViewController: UITableViewController {
         let insets = UIEdgeInsets(top: statusBarHeight, left: 0, bottom: 0, right: 0)
         tableView.contentInset = insets     // contentInset is like a padding.
         tableView.scrollIndicatorInsets = insets
+        
+        //tableView.rowHeight = 65
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 65
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -49,19 +53,34 @@ class ItemsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
+        //let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath) as! ItemCell
+        
+        cell.updateLabels()
         
         if isEqualToAllItemsCount(row: indexPath.row) {
-            cell.textLabel?.text = "No more items!"
-            cell.detailTextLabel?.text = ""
+            cell.nameLabel.text = "No more items!"
+            cell.serialNumberLabel.text = ""
+            cell.valueLabel.text = ""
         } else {
             let item = itemStore.allItems[indexPath.row]
-            cell.textLabel?.text = item.name
-            cell.detailTextLabel?.text = "$\(item.valueInDollars)"
+            //cell.textLabel?.text = item.name
+            //cell.detailTextLabel?.text = "$\(item.valueInDollars)"
+            
+            cell.nameLabel.text = item.name
+            cell.serialNumberLabel.text = item.serialNumber
+            cell.valueLabel.text = "$\(item.valueInDollars)"
+            
+            // Bronze Task
+            if item.valueInDollars < 50 {
+                cell.backgroundColor = UIColor.green
+            } else {
+                cell.backgroundColor = UIColor.red
+            }
             
             // Change the font size.
-            cell.textLabel?.font = cell.textLabel?.font.withSize(20)
-            cell.detailTextLabel?.font = cell.detailTextLabel?.font.withSize(20)
+            //cell.textLabel?.font = cell.textLabel?.font.withSize(20)
+            //cell.detailTextLabel?.font = cell.detailTextLabel?.font.withSize(20)
         }
         return cell
     }
