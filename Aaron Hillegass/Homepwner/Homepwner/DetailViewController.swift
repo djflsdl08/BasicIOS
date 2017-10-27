@@ -10,9 +10,9 @@ import UIKit
 
 class DetailViewController: UIViewController, UITextFieldDelegate {
 
-    @IBOutlet var nameField: UITextField!
-    @IBOutlet var serialNumberField: UITextField!
-    @IBOutlet var valueField: UITextField!
+    @IBOutlet var nameField: userTextField!
+    @IBOutlet var serialNumberField: userTextField!
+    @IBOutlet var valueField: userTextField!
     @IBOutlet var dateLabel: UILabel!
     
     var item: Item! {
@@ -41,7 +41,6 @@ class DetailViewController: UIViewController, UITextFieldDelegate {
         // and then call the resignFirstResponder() of specific view.
         view.endEditing(true)
     }
-    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -72,5 +71,12 @@ class DetailViewController: UIViewController, UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showDatePicker" {
+            let destination = segue.destination as! DateViewController
+            destination.item = item
+        }
     }
 }

@@ -155,12 +155,24 @@
                                             </textField>
                                         </subviews>
                                     </stackView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date Created" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vk6-mV-sen">
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="gGO-I4-YWm">
                                         <rect key="frame" x="0.0" y="114" width="343" height="473"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" ambiguous="YES" text="Date Created" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vk6-mV-sen">
+                                                <rect key="frame" x="0.0" y="0.0" width="343" height="443"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R5x-OV-M5j">
+                                                <rect key="frame" x="0.0" y="443" width="343" height="30"/>
+                                                <state key="normal" title="Change Date"/>
+                                                <connections>
+                                                    <segue destination="jzT-LG-luK" kind="show" identifier="showDatePicker" id="4Tb-L6-Ey1"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="OFP-cs-rNu" firstAttribute="leading" secondItem="Qpn-CV-yRq" secondAttribute="leading" id="HhM-UA-MSq"/>
@@ -181,10 +193,10 @@
                         </connections>
                     </view>
                     <connections>
-                        <outlet property="dateLabel" destination="Vk6-mV-sen" id="S8S-U9-WwK"/>
-                        <outlet property="nameField" destination="Xik-yZ-OIe" id="OqW-iI-XRp"/>
-                        <outlet property="serialNumberField" destination="viO-jK-JQ5" id="aFU-qS-gqU"/>
-                        <outlet property="valueField" destination="EOk-cc-3Zw" id="pZF-0p-JSa"/>
+                        <outlet property="dateLabel" destination="Vk6-mV-sen" id="ZzK-ZR-Yew"/>
+                        <outlet property="nameField" destination="Xik-yZ-OIe" id="swb-lJ-hdr"/>
+                        <outlet property="serialNumberField" destination="viO-jK-JQ5" id="TeZ-IQ-FQ0"/>
+                        <outlet property="valueField" destination="EOk-cc-3Zw" id="Ivl-ZW-TKm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aEI-rc-eUg" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -195,6 +207,36 @@
                 </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1983.2" y="108.39580209895054"/>
+        </scene>
+        <!--Date View Controller-->
+        <scene sceneID="Ics-Ii-ejb">
+            <objects>
+                <viewController id="jzT-LG-luK" customClass="DateViewController" customModule="Homepwner" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="nqh-6n-N9X"/>
+                        <viewControllerLayoutGuide type="bottom" id="4zW-7z-CdB"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="4d4-g7-637">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="1pf-K3-DRu">
+                                <rect key="frame" x="0.0" y="225" width="375" height="216"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <date key="date" timeIntervalSinceReferenceDate="530812379.23211497">
+                                    <!--2017-10-27 15:52:59 +0000-->
+                                </date>
+                            </datePicker>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="datePicker" destination="1pf-K3-DRu" id="c4h-Xo-co6"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tW4-cK-C8z" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2694" y="108"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="4SO-hJ-mad">
