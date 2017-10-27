@@ -12,7 +12,7 @@ class ItemsTableViewController: UITableViewController {
     
     var itemStore : ItemStore!
     
-    @IBAction func addNewItem(_ sender: UIButton) {
+    @IBAction func addNewItem(_ sender: AnyObject) {
         let newItem = itemStore.createItem()
         
         if let index = itemStore.allItems.index(of: newItem) {
@@ -21,7 +21,7 @@ class ItemsTableViewController: UITableViewController {
             tableView.insertRows(at: [indexPath as IndexPath], with: .automatic)
         }
     }
-    
+    /*
     @IBAction func toggleEditingMode(_ sender: UIButton) {
         if isEditing {
             sender.setTitle("Edit", for: .normal)
@@ -33,19 +33,33 @@ class ItemsTableViewController: UITableViewController {
             setEditing(true, animated: true)
         }
     }
+    */
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        
+        navigationItem.leftBarButtonItem = editButtonItem
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        /*
         let statusBarHeight = UIApplication.shared.statusBarFrame.height
         
         let insets = UIEdgeInsets(top: statusBarHeight, left: 0, bottom: 0, right: 0)
         tableView.contentInset = insets     // contentInset is like a padding.
         tableView.scrollIndicatorInsets = insets
-        
+        */
+ 
         //tableView.rowHeight = 65
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 65
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        tableView.reloadData()
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
