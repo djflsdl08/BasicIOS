@@ -9,6 +9,7 @@
 import UIKit
 
 class ItemStore {
+    // MARK: - Properties
     var allItems = [Item]()
     
     /* Don't need anymore because of 'Edit' and 'Add' buttons.
@@ -19,6 +20,7 @@ class ItemStore {
     }
     */
  
+    // MARK: - Function
     func createItem() -> Item {
         let newItem = Item(random: true)
         allItems.append(newItem)

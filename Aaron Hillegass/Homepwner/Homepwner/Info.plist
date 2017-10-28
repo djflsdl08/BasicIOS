@@ -34,5 +34,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Allows you to add photo to detailView.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Allows access to your camera</string>
 </dict>
 </plist>

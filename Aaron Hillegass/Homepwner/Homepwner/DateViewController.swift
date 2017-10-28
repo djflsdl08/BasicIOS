@@ -9,11 +9,13 @@
 import UIKit
 
 class DateViewController: UIViewController {
-
+    
+    // MARK: - Properties
     var item : Item!
     
     @IBOutlet var datePicker: UIDatePicker!
     
+    // MARK: - View life cycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         

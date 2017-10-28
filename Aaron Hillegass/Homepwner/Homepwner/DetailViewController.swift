@@ -8,18 +8,23 @@
 
 import UIKit
 
-class DetailViewController: UIViewController, UITextFieldDelegate {
+class DetailViewController: UIViewController, UITextFieldDelegate,
+                        UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 
+    // MARK: - Properties
     @IBOutlet var nameField: userTextField!
     @IBOutlet var serialNumberField: userTextField!
     @IBOutlet var valueField: userTextField!
     @IBOutlet var dateLabel: UILabel!
+    @IBOutlet var imageView: UIImageView!
     
     var item: Item! {
         didSet {
             navigationItem.title = item.name
         }
     }
+    
+    var imageStore: ImageStore!
     
     let numberFormatter : NumberFormatter = {
         let formatter = NumberFormatter()
@@ -36,12 +41,43 @@ class DetailViewController: UIViewController, UITextFieldDelegate {
         return formatter
     }()
     
+    // MARK: - Actions
     @IBAction func backgroundTapped(_ sender: UITapGestureRecognizer) {
         // Check the textField which is first responder,
         // and then call the resignFirstResponder() of specific view.
         view.endEditing(true)
     }
     
+    @IBAction func takePicture(_ sender: UIBarButtonItem) {
+        let imagePicker = UIImagePickerController()
+        
+        // If the divice has a camera, take a picture. if not, select a photo from your photo library.
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            imagePicker.sourceType = .camera
+        } else {
+            imagePicker.sourceType = .photoLibrary
+        }
+        
+        imagePicker.delegate = self
+        present(imagePicker,animated: true, completion: nil)
+    }
+
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        // Get the selected image from dictionary.
+        let image = info[UIImagePickerControllerOriginalImage] as! UIImage
+        
+        imageStore.setImage(image: image, forKey: item.itemKey)
+        
+        imageView.image = image
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    // MARK: - view life cycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -51,6 +87,10 @@ class DetailViewController: UIViewController, UITextFieldDelegate {
         //dateLabel.text = "\(item.dateCreated)"
         valueField.text = numberFormatter.string(from: item.valueInDollars as NSNumber)
         dateLabel.text = dateFormatter.string(from: item.dateCreated as Date)
+        
+        let key = item.itemKey
+        let imageToDisplay = imageStore.imageForKey(key: key)
+        imageView.image = imageToDisplay
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -66,11 +106,6 @@ class DetailViewController: UIViewController, UITextFieldDelegate {
         } else {
             item.valueInDollars = 0
         }
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

@@ -10,8 +10,12 @@ import UIKit
 
 class ItemsTableViewController: UITableViewController {
     
+    // MARK: - Properties
     var itemStore : ItemStore!
+    var imageStore : ImageStore!
     
+    
+    // MARK: - Actions
     @IBAction func addNewItem(_ sender: AnyObject) {
         let newItem = itemStore.createItem()
         
@@ -19,6 +23,18 @@ class ItemsTableViewController: UITableViewController {
             let indexPath = NSIndexPath(row: index, section: 0)
             
             tableView.insertRows(at: [indexPath as IndexPath], with: .automatic)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowItem" {
+            if let row = tableView.indexPathForSelectedRow?.row {
+                
+                let item = itemStore.allItems[row]
+                let detailViewController = segue.destination as! DetailViewController
+                detailViewController.item = item
+                detailViewController.imageStore = imageStore
+            }
         }
     }
     /*
@@ -34,6 +50,8 @@ class ItemsTableViewController: UITableViewController {
         }
     }
     */
+    
+    // MARK: - View life cycle
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
@@ -62,6 +80,7 @@ class ItemsTableViewController: UITableViewController {
         tableView.reloadData()
     }
     
+    // MARK: - UITableViewDateSource Methods
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return (itemStore.allItems.count + 1)
     }
@@ -139,6 +158,7 @@ class ItemsTableViewController: UITableViewController {
                 handler: {
                     action -> Void in
                     self.itemStore.removeItem(item: item)
+                    self.imageStore.deleteImageForKey(key: item.itemKey)
                     self.tableView.deleteRows(
                         at: [indexPath as IndexPath],
                         with: .automatic
@@ -170,6 +190,7 @@ class ItemsTableViewController: UITableViewController {
         return "Remove"     // change the title 'Delete' to 'Remove'
     }
     
+    // MARK: - Function
     func isEqualToAllItemsCount(row : Int) -> Bool {
         if row == itemStore.allItems.count {
             return true
@@ -198,17 +219,6 @@ class ItemsTableViewController: UITableViewController {
             }
         }
         return true
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "ShowItem" {
-            if let row = tableView.indexPathForSelectedRow?.row {
-                
-                let item = itemStore.allItems[row]
-                let detailViewController = segue.destination as! DetailViewController
-                detailViewController.item = item
-            }
-        }
     }
     
 }
