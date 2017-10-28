@@ -59,13 +59,56 @@ class DetailViewController: UIViewController, UITextFieldDelegate,
         }
         
         imagePicker.delegate = self
+        imagePicker.allowsEditing = true
+        // UIImagePickerController has cameraOverlayView property.
         present(imagePicker,animated: true, completion: nil)
     }
-
+    
+    @IBAction func removeImage(_ sender: UIButton) {
+        if imageView.image == nil {
+            let alert = UIAlertController (
+                title: "Information",
+                message: "This item doesn't have image.",
+                preferredStyle: .alert
+            )
+            let okAction = UIAlertAction (
+                title: "OK",
+                style: UIAlertActionStyle.default
+            )
+            alert.addAction(okAction)
+            present(alert, animated: true, completion: nil)
+        } else {
+            let actionSheet = UIAlertController (
+                title: "Remeve Image",
+                message : "Are you sure you want to remove this image?",
+                preferredStyle: .actionSheet
+            )
+            let cancelAction = UIAlertAction(
+                title: "Cancel",
+                style: .cancel,
+                handler: nil
+            )
+            actionSheet.addAction(cancelAction)
+            
+            let removeAction = UIAlertAction(
+                title: "Remove",
+                style: .destructive,
+                handler: {
+                    action -> Void in
+                    self.imageStore.deleteImageForKey(key: self.item.itemKey)
+                    self.imageView.image = nil
+                    self.item.itemKey = ""
+            }
+            )
+            actionSheet.addAction(removeAction)
+            present(actionSheet, animated: true, completion: nil)
+        }
+    }
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         // Get the selected image from dictionary.
-        let image = info[UIImagePickerControllerOriginalImage] as! UIImage
-        
+        //let image = info[UIImagePickerControllerOriginalImage] as! UIImage
+        let image = info[UIImagePickerControllerEditedImage] as! UIImage
+
         imageStore.setImage(image: image, forKey: item.itemKey)
         
         imageView.image = image

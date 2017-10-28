@@ -174,8 +174,15 @@
                                         </subviews>
                                     </stackView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="248" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="d7l-Hs-ach">
-                                        <rect key="frame" x="0.0" y="172.5" width="343" height="370.5"/>
+                                        <rect key="frame" x="0.0" y="172.5" width="343" height="332.5"/>
                                     </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="99Q-mP-Uyb">
+                                        <rect key="frame" x="0.0" y="513" width="343" height="30"/>
+                                        <state key="normal" title="Remove Image"/>
+                                        <connections>
+                                            <action selector="removeImage:" destination="rHP-Sl-Htl" eventType="touchUpInside" id="uXj-o9-CAe"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="OFP-cs-rNu" firstAttribute="leading" secondItem="Qpn-CV-yRq" secondAttribute="leading" id="HhM-UA-MSq"/>
