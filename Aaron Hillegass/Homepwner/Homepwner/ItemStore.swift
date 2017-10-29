@@ -12,6 +12,13 @@ class ItemStore {
     // MARK: - Properties
     var allItems = [Item]()
     
+    let itemArchiveURL : NSURL = {
+        let documentsDirectories = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let documentDirectory = documentsDirectories.first!
+        
+        return documentDirectory.appendingPathComponent("items.archive") as NSURL
+    }()
+    
     /* Don't need anymore because of 'Edit' and 'Add' buttons.
     init() {
         for _ in 0..<5 {
