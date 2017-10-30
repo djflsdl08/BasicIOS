@@ -12,13 +12,6 @@ class ItemStore {
     // MARK: - Properties
     var allItems = [Item]()
     
-    let itemArchiveURL : NSURL = {
-        let documentsDirectories = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        let documentDirectory = documentsDirectories.first!
-        
-        return documentDirectory.appendingPathComponent("items.archive") as NSURL
-    }()
-    
     /* Don't need anymore because of 'Edit' and 'Add' buttons.
     init() {
         for _ in 0..<5 {
@@ -27,6 +20,25 @@ class ItemStore {
     }
     */
  
+    // MARK: - Archive
+    let itemArchiveURL : NSURL = {
+        let documentsDirectories = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let documentDirectory = documentsDirectories.first!
+        
+        return documentDirectory.appendingPathComponent("items.archive") as NSURL
+    }()
+    
+    func saveChanges() -> Bool {
+        print("Saving items to: \(itemArchiveURL.path!)")
+        return NSKeyedArchiver.archiveRootObject(allItems, toFile: itemArchiveURL.path!)
+    }
+    
+    init() {
+        if let archivedItems = NSKeyedUnarchiver.unarchiveObject(withFile: itemArchiveURL.path!) as? [Item] {
+            allItems += archivedItems
+        }
+    }
+    
     // MARK: - Function
     func createItem() -> Item {
         let newItem = Item(random: true)
