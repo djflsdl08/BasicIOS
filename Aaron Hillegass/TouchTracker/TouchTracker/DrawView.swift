@@ -8,12 +8,21 @@
 
 import UIKit
 
-class DrawView: UIView {
+class DrawView: UIView, UIGestureRecognizerDelegate {
 
     // MARK: - Properties
     //var currentLine: Line?    -> Only one touch at a time
     var currentLines = [NSValue: Line]()    // Multyple touch at a time
     var finishedLines = [Line]()
+    var selectedLineIndex: Int? {
+        didSet {
+            if selectedLineIndex == nil {
+                let menu = UIMenuController.shared
+                menu.setMenuVisible(false, animated: true)
+            }
+        }
+    }
+    var moveRecognizer: UIPanGestureRecognizer!
     
     @IBInspectable var finishedLineColor: UIColor = UIColor.black {
         didSet {
@@ -33,6 +42,29 @@ class DrawView: UIView {
         }
     }
     
+    // MARK: - init
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        
+        let doubleTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(doubleTap(gestureRecognizer:)))
+        doubleTapRecognizer.numberOfTapsRequired = 2
+        doubleTapRecognizer.delaysTouchesBegan = true
+        addGestureRecognizer(doubleTapRecognizer)
+        
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(tap(gestureRecognizer:)))
+        tapRecognizer.delaysTouchesBegan = true
+        tapRecognizer.require(toFail: doubleTapRecognizer)
+        addGestureRecognizer(tapRecognizer)
+        
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPress(gestureRecognizer:)))
+        addGestureRecognizer(longPressRecognizer)
+        
+        moveRecognizer = UIPanGestureRecognizer(target: self, action: #selector(moveLine(gestureRecognizer:)))
+        moveRecognizer.delegate = self
+        moveRecognizer.cancelsTouchesInView = false
+        addGestureRecognizer(moveRecognizer)
+    }
+    
     // MARK: - function
     func strokeLine(line: Line) {
         let path = UIBezierPath()
@@ -42,6 +74,103 @@ class DrawView: UIView {
         path.move(to: line.begin)
         path.addLine(to: line.end)
         path.stroke()
+    }
+    
+    func indexOfLineAtPoint(point: CGPoint) -> Int? {
+        for (index, line) in finishedLines.enumerated() {
+            let begin = line.begin
+            let end = line.end
+            
+            for t in stride(from:CGFloat(0), to: 1.0, by: 0.05) { // for var t : CGFloat = 0; t < 1.0; t += 0.05
+                let x = begin.x + ((end.x - begin.x) * t)
+                let y = begin.y + ((end.y - begin.y) * t)
+                
+                if hypot(x - point.x, y - point.y) < 20.0 {
+                    return index
+                }
+            }
+        }
+        return nil
+    }
+    
+    func deleteLine(sender: AnyObject) {
+        if let index = selectedLineIndex {
+            finishedLines.remove(at: index)
+            selectedLineIndex = nil
+            
+            setNeedsDisplay()
+        }
+    }
+    
+    // MARK: About gesture
+    func doubleTap(gestureRecognizer: UIGestureRecognizer) {
+        print("Recognized a double tap")
+        
+        selectedLineIndex = nil
+        currentLines.removeAll(keepingCapacity: false)
+        finishedLines.removeAll(keepingCapacity: false)
+        setNeedsDisplay()
+    }
+    
+    func tap(gestureRecognizer: UIGestureRecognizer) {
+        print("Recognized a tap")
+        
+        let point = gestureRecognizer.location(in: self)
+        selectedLineIndex = indexOfLineAtPoint(point: point)
+        
+        let menu = UIMenuController.shared
+        
+        if selectedLineIndex != nil {
+            becomeFirstResponder()
+            
+            let deleteItem = UIMenuItem(title: "Delete", action: #selector(deleteLine(sender:)))
+            menu.menuItems = [deleteItem]
+            
+            menu.setTargetRect(CGRect(x: point.x, y: point.y, width: 2, height: 2), in: self)
+            menu.setMenuVisible(true, animated: true)
+        } else {
+            menu.setMenuVisible(false, animated: true)
+        }
+        
+        setNeedsDisplay()
+    }
+    
+    func longPress(gestureRecognizer: UIGestureRecognizer) {
+        print("Recognized a long press")
+        
+        if gestureRecognizer.state == .began {
+            let point = gestureRecognizer.location(in: self)
+            selectedLineIndex = indexOfLineAtPoint(point: point)
+            
+            if selectedLineIndex != nil {
+                currentLines.removeAll(keepingCapacity: false)
+            }
+        } else if gestureRecognizer.state == .ended {
+            selectedLineIndex = nil
+        }
+        
+        setNeedsDisplay()
+    }
+    
+    func moveLine(gestureRecognizer: UIPanGestureRecognizer) {
+        print("Recognized a pan")
+        
+        if let index = selectedLineIndex {
+            if gestureRecognizer.state == .changed {
+                let translation = gestureRecognizer.translation(in: self)
+                
+                finishedLines[index].begin.x += translation.x
+                finishedLines[index].begin.y += translation.y
+                finishedLines[index].end.x += translation.x
+                finishedLines[index].end.y += translation.y
+                
+                gestureRecognizer.setTranslation(CGPoint.zero, in: self)
+                
+                setNeedsDisplay()
+            }
+        } else {
+            return
+        }
     }
     
     // MARK: Draw
@@ -63,6 +192,16 @@ class DrawView: UIView {
         for(_,line) in currentLines {
             strokeLine(line: line)
         }
+        
+        if let index = selectedLineIndex {
+            UIColor.green.setStroke()
+            let selectedLine = finishedLines[index]
+            strokeLine(line: selectedLine)
+        }
+    }
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
     
     // MARK: - Touch events
@@ -131,5 +270,9 @@ class DrawView: UIView {
         
         currentLines.removeAll()
         setNeedsDisplay()
+    }
+    
+    override var canBecomeFirstResponder: Bool {
+        return true
     }
 }
