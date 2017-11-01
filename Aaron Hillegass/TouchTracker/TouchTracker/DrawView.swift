@@ -165,7 +165,7 @@ class DrawView: UIView, UIGestureRecognizerDelegate {
                 finishedLines[index].end.y += translation.y
                 
                 gestureRecognizer.setTranslation(CGPoint.zero, in: self)
-                
+                print("\(gestureRecognizer.velocity(in: self))")
                 setNeedsDisplay()
             }
         } else {
@@ -236,6 +236,7 @@ class DrawView: UIView, UIGestureRecognizerDelegate {
             let key = NSValue(nonretainedObject: touch)
             currentLines[key]?.end = touch.location(in: self)
         }
+        
         setNeedsDisplay()
     }
     
