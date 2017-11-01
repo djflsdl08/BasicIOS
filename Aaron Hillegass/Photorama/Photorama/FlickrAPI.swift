@@ -9,7 +9,7 @@
 import Foundation
 
 enum Method: String {
-    case RecentPhotos = "flickr.photos.getRecent"
+    case interestingPhotos = "flickr.interestingness.getList"
 }
 
 enum PhotosResult {
@@ -60,15 +60,16 @@ struct FlickrAPI {
         return components.url!
     }
     
-    static func recentPhotosURL() -> URL {
-        return flickrURL(method: .RecentPhotos, parameters: ["extras":"url_h,date_taken"])
+    static var interestingPhotosURL: URL {
+        return flickrURL(method: .interestingPhotos, parameters: ["extras":"url_h,date_taken"])
     }
     
-    static func photosFromJSONData(data: Data) -> PhotosResult {
+    static func photos(fromJSON data: Data) -> PhotosResult {
         do {
             let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
             
-            guard let jsonDictionary = jsonObject as? [String: Any],
+            guard
+                let jsonDictionary = jsonObject as? [String: Any],
                 let photos = jsonDictionary["photos"] as? [String: Any],
                 let photosArray = photos["photo"] as? [[String: Any]] else {
                     return .Failure(FlickrError.InvalidJSONData)
@@ -76,11 +77,11 @@ struct FlickrAPI {
             
             var finalPhotos = [Photo]()
             for photoJSON in photosArray {
-                if let photo = photoFromJSONObject(json: photoJSON) {
+                if let photo = photo(fromJSON: photoJSON) {
                     finalPhotos.append(photo)
                 }
             }
-            if finalPhotos.count == 0 && photosArray.count > 0 {
+            if finalPhotos.isEmpty && !photosArray.isEmpty {
                 return .Failure(FlickrError.InvalidJSONData)
             }
             return .Success(finalPhotos)
@@ -90,8 +91,9 @@ struct FlickrAPI {
         }
     }
     
-    private static func photoFromJSONObject(json: [String: Any]) -> Photo? {
-        guard let photoID = json["id"] as? String,
+    private static func photo(fromJSON json: [String: Any]) -> Photo? {
+        guard
+            let photoID = json["id"] as? String,
             let title = json["title"] as? String,
             let dateString = json["datetaken"] as? String,
             let photoURLString = json["url_h"] as? String,

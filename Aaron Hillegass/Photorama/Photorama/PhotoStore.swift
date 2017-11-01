@@ -6,18 +6,28 @@
 //  Copyright © 2017년 Kim,Yejin. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+enum ImageResult {
+    case Success(UIImage)
+    case Failure(Error)
+}
+
+enum PhotoError: Error {
+    case ImageCreationError
+}
 
 class PhotoStore {
     
-    let session: URLSession = {
+    private let session: URLSession = {
         let config = URLSessionConfiguration.default
+        
         return URLSession(configuration: config)
     }()
     
-    //func fetchRecentPhotos() {
-    func fetchRecentPhotos(completion: @escaping (PhotosResult) -> Void) {
-        let url = FlickrAPI.recentPhotosURL()
+    //func fetchInterstringPhotos() {
+    func fetchInterestingPhotos(completion: @escaping (PhotosResult) -> Void) {
+        let url = FlickrAPI.interestingPhotosURL
         let request = URLRequest(url: url)
         let task = session.dataTask(with: request) {
             (data, response, error) -> Void in
@@ -42,17 +52,45 @@ class PhotoStore {
                 print("Unexpected error with the request")
             }*/
             
-            let result = self.processRecentPhotosRequest(data: data, error: error)
-            completion(result)
+            let result = self.processPhotosRequest(data: data, error: error)
+            OperationQueue.main.addOperation {
+                completion(result)
+            }
         }
         task.resume()   // Start a Web service request.
     }
     
-    func processRecentPhotosRequest(data:Data?, error: Error?) -> PhotosResult {
+    func fetchImage(for photo: Photo, completion: @escaping (ImageResult) -> Void) {
+        let photoURL = photo.remoteURL
+        let request = URLRequest(url: photoURL)
+        
+        let task = session.dataTask(with: request) {
+            (data, response, error) -> Void in
+            let result = self.processImageRequest(data: data, error: error)
+            OperationQueue.main.addOperation {
+                completion(result)
+            }
+        }
+        task.resume()
+    }
+    
+    func processPhotosRequest(data:Data?, error: Error?) -> PhotosResult {
         guard let jsonData = data else {
             return .Failure(error!)
         }
-        return FlickrAPI.photosFromJSONData(data: jsonData)
+        return FlickrAPI.photos(fromJSON: jsonData)
+    }
+    
+    func processImageRequest(data:Data?, error: Error?) -> ImageResult {
+        guard let imageData = data,
+              let image = UIImage(data: imageData) else {
+                if data == nil {
+                    return .Failure(error!)
+                } else {
+                    return .Failure(PhotoError.ImageCreationError)
+                }
+        }
+        return .Success(image)
     }
 }
 
