@@ -50,7 +50,7 @@
                                     <action selector="startStopButton:" destination="0rx-87-ROb" eventType="touchUpInside" id="aoa-k2-kbF"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="00:00.00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bGA-t7-qak">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="00:00.00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="bGA-t7-qak">
                                 <rect key="frame" x="42" y="164" width="291" height="97"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="70"/>
@@ -64,13 +64,17 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Mho-aj-Xlj" firstAttribute="top" secondItem="lGa-za-gIh" secondAttribute="bottom" id="CQl-DX-tln"/>
+                            <constraint firstAttribute="trailing" secondItem="lGa-za-gIh" secondAttribute="trailing" id="On7-CN-obk"/>
                             <constraint firstAttribute="trailing" secondItem="lGa-za-gIh" secondAttribute="trailing" id="mHQ-9u-1ks"/>
+                            <constraint firstItem="lGa-za-gIh" firstAttribute="leading" secondItem="9BN-LU-uam" secondAttribute="leading" id="obL-vb-lkw"/>
                             <constraint firstItem="lGa-za-gIh" firstAttribute="leading" secondItem="9BN-LU-uam" secondAttribute="leading" id="qYC-0T-rRV"/>
                             <constraint firstItem="Mho-aj-Xlj" firstAttribute="top" secondItem="lGa-za-gIh" secondAttribute="bottom" id="w2i-Cq-7G8"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Stopwatch" image="Stopwatch" id="c7i-kp-rmH"/>
                     <connections>
+                        <outlet property="lapResetButton" destination="zOf-0r-Q9f" id="AKd-XC-HV1"/>
                         <outlet property="timerLabel" destination="bGA-t7-qak" id="b1W-Hb-TSO"/>
                     </connections>
                 </viewController>
