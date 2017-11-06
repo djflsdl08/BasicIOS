@@ -56,7 +56,7 @@ class StopwatchViewController: UIViewController {
         let date = NSDate(timeIntervalSince1970: Double(time))
         let formatter = DateFormatter()
         formatter.timeZone = NSTimeZone(name: "UTC") as TimeZone!
-        formatter.dateFormat = "HH:mm:ss"
+        formatter.dateFormat = "mm:ss"
         
         return formatter.string(from: date as Date)
     }

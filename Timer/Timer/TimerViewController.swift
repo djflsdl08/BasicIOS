@@ -8,12 +8,18 @@
 
 import UIKit
 
-class TimerViewController: UIViewController {
+class TimerViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource {
 
+    @IBOutlet weak var selectTime: UIPickerView!
+    var pickerData: [String] = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        self.selectTime.delegate = self
+        self.selectTime.dataSource = self
+        
+        pickerData = ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6"]
         // Do any additional setup after loading the view.
     }
 
@@ -22,7 +28,21 @@ class TimerViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    // The number of rows of data
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return pickerData.count
+    }
+    
+    
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        let attributedString = NSAttributedString(string: "\(pickerData[row])", attributes: [NSForegroundColorAttributeName : UIColor.white])
+        return attributedString
+    }
+    
     /*
     // MARK: - Navigation
 

@@ -303,6 +303,7 @@
 				3E15725A1FAB76DB00678B36 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
