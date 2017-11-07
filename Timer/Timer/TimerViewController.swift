@@ -11,7 +11,9 @@ import UIKit
 class TimerViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource {
 
     @IBOutlet weak var selectTime: UIPickerView!
-    var pickerData: [String] = [String]()
+    var hours = [String]()
+    var minutes = [String]()
+    var seconds = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,7 +21,15 @@ class TimerViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDa
         self.selectTime.delegate = self
         self.selectTime.dataSource = self
         
-        pickerData = ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6"]
+        for i in 0..<24 {
+            hours.append("\(i)")
+        }
+        
+        for i in 0..<60 {
+            minutes.append("\(i)")
+            seconds.append("\(i)")
+        }
+        
         // Do any additional setup after loading the view.
     }
 
@@ -29,19 +39,35 @@ class TimerViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDa
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
+        return 3
     }
     
     // The number of rows of data
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return pickerData.count
+        switch(component) {
+        case 0 : return hours.count
+        case 1 : return minutes.count
+        case 2 : return seconds.count
+        default : return 0
+        }
     }
     
     
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        let attributedString = NSAttributedString(string: "\(pickerData[row])", attributes: [NSForegroundColorAttributeName : UIColor.white])
+
+        var integer = ""
+        
+        switch(component) {
+        case 0 : integer = hours[row]
+        case 1 : integer = minutes[row]
+        case 2 : integer = seconds[row]
+        default : break
+        }
+        
+        let attributedString = NSAttributedString(string: integer, attributes: [NSForegroundColorAttributeName : UIColor.white])
         return attributedString
     }
+    
     
     /*
     // MARK: - Navigation
