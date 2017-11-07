@@ -11,6 +11,9 @@ import UIKit
 class TimerViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource {
 
     @IBOutlet weak var selectTime: UIPickerView!
+    @IBOutlet weak var cancel: UIButton!
+    @IBOutlet weak var start: UIButton!
+    
     var hours = [String]()
     var minutes = [String]()
     var seconds = [String]()
@@ -20,6 +23,8 @@ class TimerViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDa
         
         self.selectTime.delegate = self
         self.selectTime.dataSource = self
+        
+        cancel.isEnabled = false
         
         for i in 0..<24 {
             hours.append("\(i)")
@@ -66,6 +71,29 @@ class TimerViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDa
         
         let attributedString = NSAttributedString(string: integer, attributes: [NSForegroundColorAttributeName : UIColor.white])
         return attributedString
+    }
+    
+    @IBAction func startPauseResumeButton(_ sender: UIButton) {
+        cancel.isEnabled = true
+        
+        if sender.currentTitle == "Start" {
+            sender.setTitle("Pause", for: .normal)
+            sender.setTitleColor(UIColor.orange, for: .normal)
+        }
+        else if sender.currentTitle == "Pause" {
+            sender.setTitle("Resume", for: .normal)
+            sender.setTitleColor(UIColor.green, for: .normal)
+        }
+        else if sender.currentTitle == "Resume" {
+            sender.setTitle("Pause", for: .normal)
+            sender.setTitleColor(UIColor.orange, for: .normal)
+        }
+    }
+    
+    @IBAction func cancelButton(_ sender: UIButton) {
+        cancel.isEnabled = false
+        start.setTitle("Start", for: .normal)
+        start.setTitleColor(UIColor.green, for: .normal)
     }
     
     
