@@ -10,13 +10,18 @@ import UIKit
 
 class TimerViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource {
 
-    @IBOutlet weak var selectTime: UIPickerView!
+    @IBOutlet var selectTime: UIPickerView!
     @IBOutlet weak var cancel: UIButton!
     @IBOutlet weak var start: UIButton!
+    @IBOutlet var timerLabel: UILabel!
     
     var hours = [String]()
     var minutes = [String]()
     var seconds = [String]()
+    
+    var hour : Int = 0
+    var minute : Int = 0
+    var second : Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +30,7 @@ class TimerViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDa
         self.selectTime.dataSource = self
         
         cancel.isEnabled = false
+        timerLabel.removeFromSuperview()
         
         for i in 0..<24 {
             hours.append("\(i)")
@@ -73,12 +79,27 @@ class TimerViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDa
         return attributedString
     }
     
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        switch(component) {
+        case 0 :
+            hour = row
+        case 1 :
+            minute = row
+        case 2 :
+            second = row
+        default : break
+        }
+    }
+    
     @IBAction func startPauseResumeButton(_ sender: UIButton) {
         cancel.isEnabled = true
         
         if sender.currentTitle == "Start" {
             sender.setTitle("Pause", for: .normal)
             sender.setTitleColor(UIColor.orange, for: .normal)
+            selectTime.removeFromSuperview()
+            selectedTime()
+            
         }
         else if sender.currentTitle == "Pause" {
             sender.setTitle("Resume", for: .normal)
@@ -94,8 +115,17 @@ class TimerViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDa
         cancel.isEnabled = false
         start.setTitle("Start", for: .normal)
         start.setTitleColor(UIColor.green, for: .normal)
+        
+        timerLabel.removeFromSuperview()
+        view.insertSubview(selectTime, at: 0)
+        
+        
     }
     
+    func selectedTime() {
+        
+        view.insertSubview(timerLabel, at: 0)
+    }
     
     /*
     // MARK: - Navigation

@@ -14,7 +14,7 @@ class StopwatchViewController: UIViewController {
     @IBOutlet weak var lapResetButton: UIButton!
     
     var timer = Timer()
-    var isTimerRunning = false
+    //var isTimerRunning = false
     var seconds = 0
     
     @IBAction func startStopButton(_ sender: UIButton) {

@@ -137,14 +137,22 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="00:00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5D1-18-oVL">
+                                <rect key="frame" x="0.0" y="151" width="375" height="216"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="80"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Timer" image="Timer" id="NFW-QP-hbi"/>
                     <connections>
                         <outlet property="cancel" destination="oLS-8D-KdO" id="tQv-zP-eDA"/>
-                        <outlet property="selectTime" destination="9Ct-rW-MF8" id="geA-AD-dJe"/>
+                        <outlet property="selectTime" destination="9Ct-rW-MF8" id="oPe-dV-1ak"/>
                         <outlet property="start" destination="k16-Un-DbE" id="qTn-bC-st2"/>
+                        <outlet property="timerLabel" destination="5D1-18-oVL" id="rbf-pR-kBH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RLP-Fo-vwN" userLabel="First Responder" sceneMemberID="firstResponder"/>
