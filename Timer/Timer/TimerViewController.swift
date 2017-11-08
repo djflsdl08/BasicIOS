@@ -23,6 +23,9 @@ class TimerViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDa
     var minute : Int = 0
     var second : Int = 0
     
+    var timer = Timer()
+    var convertedSeconds = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -89,6 +92,7 @@ class TimerViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDa
             second = row
         default : break
         }
+        convertedSeconds = hour*60*60 + minute*60 + second
     }
     
     @IBAction func startPauseResumeButton(_ sender: UIButton) {
@@ -98,6 +102,7 @@ class TimerViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDa
             sender.setTitle("Pause", for: .normal)
             sender.setTitleColor(UIColor.orange, for: .normal)
             selectTime.removeFromSuperview()
+            timerLabel.text = timerLabelFormat(time: TimeInterval(convertedSeconds))
             selectedTime()
             
         }
@@ -116,15 +121,52 @@ class TimerViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDa
         start.setTitle("Start", for: .normal)
         start.setTitleColor(UIColor.green, for: .normal)
         
+        convertedSeconds = 0
+        timer.invalidate()
+        
         timerLabel.removeFromSuperview()
         view.insertSubview(selectTime, at: 0)
         
         
     }
     
+    func timerLabelFormat(time: TimeInterval) -> String {
+        let date = NSDate(timeIntervalSince1970: Double(time))
+        let formatter = DateFormatter()
+        formatter.timeZone = NSTimeZone(name: "UTC") as TimeZone!
+        formatter.dateFormat = "HH:mm:ss"
+        
+        return formatter.string(from: date as Date)
+    }
+    
     func selectedTime() {
         
         view.insertSubview(timerLabel, at: 0)
+        runTimer()
+    }
+    
+    func runTimer() {
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(TimerViewController.updateTimer)), userInfo: nil, repeats: true)
+    }
+    
+    func updateTimer() {
+        convertedSeconds -= 1
+        timerLabel.text = timerLabelFormat(time: TimeInterval(convertedSeconds))
+        
+        if convertedSeconds == 0 {
+            timer.invalidate()
+            let alert = UIAlertController(title: "CLOCK", message: "Timer Done", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(
+                title: "OK",
+                style: .default,
+                handler : {
+                    action -> Void in
+                    self.timerLabel.removeFromSuperview()
+                    self.view.insertSubview(self.selectTime, at: 0)
+                }
+            ))
+            present(alert, animated: true, completion: nil)
+        }
     }
     
     /*
