@@ -98,8 +98,7 @@ class TimerViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDa
         cancel.isEnabled = true
         
         if sender.currentTitle == "Start" {
-            sender.setTitle("Pause", for: .normal)
-            sender.setTitleColor(UIColor.orange, for: .normal)
+            changeButton(button: sender, title: "Pause", color: .orange)
             selectTime.removeFromSuperview()
             convertedSeconds = hour*60*60 + minute*60 + second
             timerLabel.text = timerLabelFormat(time: TimeInterval(convertedSeconds))
@@ -107,21 +106,18 @@ class TimerViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDa
             
         }
         else if sender.currentTitle == "Pause" {
-            sender.setTitle("Resume", for: .normal)
-            sender.setTitleColor(UIColor.green, for: .normal)
+            changeButton(button: sender, title: "Resume", color: .green)
             timer.invalidate()
         }
         else if sender.currentTitle == "Resume" {
-            sender.setTitle("Pause", for: .normal)
-            sender.setTitleColor(UIColor.orange, for: .normal)
+            changeButton(button: sender, title: "Pause", color: .orange)
             runTimer()
         }
     }
     
     @IBAction func cancelButton(_ sender: UIButton) {
         cancel.isEnabled = false
-        start.setTitle("Start", for: .normal)
-        start.setTitleColor(UIColor.green, for: .normal)
+        changeButton(button: start, title: "Start", color: .green)
         
         convertedSeconds = 0
         timer.invalidate()
@@ -165,10 +161,16 @@ class TimerViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDa
                     action -> Void in
                     self.timerLabel.removeFromSuperview()
                     self.view.insertSubview(self.selectTime, at: 0)
+                    self.changeButton(button: self.start, title: "Start", color: .green)
                 }
             ))
             present(alert, animated: true, completion: nil)
         }
+    }
+    
+    func changeButton(button: UIButton, title: String, color: UIColor) {
+        button.setTitle(title, for: .normal)
+        button.setTitleColor(color, for: .normal)
     }
     
     /*
