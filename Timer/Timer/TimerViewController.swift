@@ -92,7 +92,6 @@ class TimerViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDa
             second = row
         default : break
         }
-        convertedSeconds = hour*60*60 + minute*60 + second
     }
     
     @IBAction func startPauseResumeButton(_ sender: UIButton) {
@@ -102,6 +101,7 @@ class TimerViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDa
             sender.setTitle("Pause", for: .normal)
             sender.setTitleColor(UIColor.orange, for: .normal)
             selectTime.removeFromSuperview()
+            convertedSeconds = hour*60*60 + minute*60 + second
             timerLabel.text = timerLabelFormat(time: TimeInterval(convertedSeconds))
             selectedTime()
             
@@ -109,10 +109,12 @@ class TimerViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDa
         else if sender.currentTitle == "Pause" {
             sender.setTitle("Resume", for: .normal)
             sender.setTitleColor(UIColor.green, for: .normal)
+            timer.invalidate()
         }
         else if sender.currentTitle == "Resume" {
             sender.setTitle("Pause", for: .normal)
             sender.setTitleColor(UIColor.orange, for: .normal)
+            runTimer()
         }
     }
     
