@@ -101,9 +101,12 @@ class TimerViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDa
             changeButton(button: sender, title: "Pause", color: .orange)
             selectTime.removeFromSuperview()
             convertedSeconds = hour*60*60 + minute*60 + second
-            timerLabel.text = timerLabelFormat(time: TimeInterval(convertedSeconds))
-            selectedTime()
-            
+            if convertedSeconds == 0 {
+                presentAlert()
+            } else {
+                timerLabel.text = timerLabelFormat(time: TimeInterval(convertedSeconds))
+                selectedTime()
+            }
         }
         else if sender.currentTitle == "Pause" {
             changeButton(button: sender, title: "Resume", color: .green)
@@ -152,20 +155,25 @@ class TimerViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDa
         timerLabel.text = timerLabelFormat(time: TimeInterval(convertedSeconds))
         
         if convertedSeconds == 0 {
-            timer.invalidate()
-            let alert = UIAlertController(title: "CLOCK", message: "Timer Done", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(
-                title: "OK",
-                style: .default,
-                handler : {
-                    action -> Void in
-                    self.timerLabel.removeFromSuperview()
-                    self.view.insertSubview(self.selectTime, at: 0)
-                    self.changeButton(button: self.start, title: "Start", color: .green)
-                }
-            ))
-            present(alert, animated: true, completion: nil)
+            presentAlert()
         }
+    }
+    
+    func presentAlert() {
+        timer.invalidate()
+        let alert = UIAlertController(title: "CLOCK", message: "Timer Done", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(
+            title: "OK",
+            style: .default,
+            handler : {
+                action -> Void in
+                self.timerLabel.removeFromSuperview()
+                self.view.insertSubview(self.selectTime, at: 0)
+                self.changeButton(button: self.start, title: "Start", color: .green)
+                self.cancel.isEnabled = false
+        }
+        ))
+        present(alert, animated: true, completion: nil)
     }
     
     func changeButton(button: UIButton, title: String, color: UIColor) {
