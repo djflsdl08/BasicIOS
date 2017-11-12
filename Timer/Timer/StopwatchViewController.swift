@@ -18,8 +18,8 @@ class StopwatchViewController: UIViewController, UITableViewDelegate, UITableVie
     //var isTimerRunning = false
     var seconds = 0
     var lapSeconds = 0
-    var lapCell : [LapTableViewCell] = []
     var lapCount = 0
+    var lapDatas = [lapData]()
     
     @IBAction func startStopButton(_ sender: UIButton) {
         lapResetButton.isEnabled = true
@@ -41,16 +41,14 @@ class StopwatchViewController: UIViewController, UITableViewDelegate, UITableVie
         if sender.currentTitle == "Lap" {
             lapCount += 1
             let time = timerLabelFormat(time: TimeInterval(lapSeconds))
-            let lapLabel = "Lap" + "\(lapCount)"
-            let newLapCell = LapTableViewCell()
-            newLapCell.time.text = time
-            newLapCell.lapCount.text = lapLabel
+            let newLap = lapData(lapTime: time, lapCount: lapCount)
             
-            lapCell.append(newLapCell)
+            lapDatas.append(newLap)
             
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
+            
             lapSeconds = 0
         } else if sender.currentTitle == "Reset" {
             timer.invalidate()
@@ -94,17 +92,25 @@ class StopwatchViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return lapCell.count
+        return lapDatas.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell")
+        let cellIdentifier = "cell"
         
-        let row = indexPath.row
+        guard let cell = tableView.dequeueReusableCell (
+            withIdentifier: cellIdentifier,
+            for: indexPath
+            ) as? LapTableViewCell else {
+                fatalError("The dequeued cell is not an instance of LapTableViewCell.")
+        }
         
-        cell?.textLabel?.text = lapCell[row].time.text
+        let data = lapDatas[indexPath.row]
         
-        return cell!
+        cell.lapCount.text = "Lap \(data.lapCount)"
+        cell.time.text = data.lapTime
+        
+        return cell
     }
 }
