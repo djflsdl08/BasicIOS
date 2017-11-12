@@ -13,6 +13,7 @@
 		3E15725C1FAB770800678B36 /* TimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E15725B1FAB770800678B36 /* TimerViewController.swift */; };
 		3E15725E1FAB790F00678B36 /* StopwatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E15725D1FAB790F00678B36 /* StopwatchViewController.swift */; };
 		3E1572601FAB7D9700678B36 /* Asset.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E15725F1FAB7D9700678B36 /* Asset.xcassets */; };
+		3E1572681FB84AA300678B36 /* LapTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1572671FB84AA300678B36 /* LapTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		3E15725B1FAB770800678B36 /* TimerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerViewController.swift; sourceTree = "<group>"; };
 		3E15725D1FAB790F00678B36 /* StopwatchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StopwatchViewController.swift; sourceTree = "<group>"; };
 		3E15725F1FAB7D9700678B36 /* Asset.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Asset.xcassets; sourceTree = "<group>"; };
+		3E1572671FB84AA300678B36 /* LapTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LapTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +63,7 @@
 				3E1572491FAB76DB00678B36 /* AppDelegate.swift */,
 				3E15724D1FAB76DB00678B36 /* Main.storyboard */,
 				3E15725D1FAB790F00678B36 /* StopwatchViewController.swift */,
+				3E1572671FB84AA300678B36 /* LapTableViewCell.swift */,
 				3E1572521FAB76DB00678B36 /* LaunchScreen.storyboard */,
 				3E1572551FAB76DB00678B36 /* Info.plist */,
 			);
@@ -140,6 +143,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E15725E1FAB790F00678B36 /* StopwatchViewController.swift in Sources */,
+				3E1572681FB84AA300678B36 /* LapTableViewCell.swift in Sources */,
 				3E15725C1FAB770800678B36 /* TimerViewController.swift in Sources */,
 				3E15724A1FAB76DB00678B36 /* AppDelegate.swift in Sources */,
 			);
