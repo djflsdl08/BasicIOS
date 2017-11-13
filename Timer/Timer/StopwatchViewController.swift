@@ -21,6 +21,8 @@ class StopwatchViewController: UIViewController, UITableViewDelegate, UITableVie
     var lapCount = 0
     var lapDatas = [lapData]()
     
+    var compareTime = ["min":Int.max,"max":Int.min,"minIndex":0,"maxIndex":0]
+    
     @IBAction func startStopButton(_ sender: UIButton) {
         lapResetButton.isEnabled = true
         
@@ -39,6 +41,7 @@ class StopwatchViewController: UIViewController, UITableViewDelegate, UITableVie
     
     @IBAction func lapResetButton(_ sender: UIButton) {
         if sender.currentTitle == "Lap" {
+            findMinMax(index : lapCount)
             lapCount += 1
             let time = timerLabelFormat(time: TimeInterval(lapSeconds))
             let newLap = lapData(lapTime: time, lapCount: lapCount)
@@ -53,9 +56,35 @@ class StopwatchViewController: UIViewController, UITableViewDelegate, UITableVie
         } else if sender.currentTitle == "Reset" {
             timer.invalidate()
             seconds = 0
+            lapSeconds = 0
+            lapCount = 0
             timerLabel.text = timerLabelFormat(time: TimeInterval(seconds))
             lapResetButton.isEnabled = false
             lapResetButton.setTitle("Lap", for: .normal)
+            lapDatas.removeAll()
+            compareTimeInit()
+            
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+            
+        }
+    }
+    
+    func compareTimeInit() {
+        compareTime["min"] = Int.max
+        compareTime["max"] = Int.min
+        compareTime["minIndex"] = 0
+        compareTime["maxIndex"] = 0
+    }
+    
+    func findMinMax(index : Int) {
+        if lapSeconds < compareTime["min"]! {
+            compareTime["min"] = lapSeconds
+            compareTime["minIndex"] = index
+        } else if lapSeconds > compareTime["max"]! {
+            compareTime["max"] = lapSeconds
+            compareTime["maxIndex"] = index
         }
     }
     
@@ -92,11 +121,13 @@ class StopwatchViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        tableView.backgroundColor = UIColor.black
+
         return lapDatas.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+
         let cellIdentifier = "cell"
         
         guard let cell = tableView.dequeueReusableCell (
@@ -107,6 +138,22 @@ class StopwatchViewController: UIViewController, UITableViewDelegate, UITableVie
         }
         
         let data = lapDatas[indexPath.row]
+       
+        //print("indexPath.row : \(indexPath.row)")
+        //print("minIndex : \(Int(compareTime["minIndex"]!))")
+        //print("maxIndex : \(Int(compareTime["maxIndex"]!))")
+        //print("-------------------------")
+        
+        cell.lapCount.textColor = UIColor.white
+        cell.time.textColor = UIColor.white
+        
+        if indexPath.row == Int(compareTime["minIndex"]!) {
+            cell.lapCount.textColor = UIColor.green
+            cell.time.textColor = UIColor.green
+        } else if indexPath.row == Int(compareTime["maxIndex"]!) {
+            cell.lapCount.textColor = UIColor.red
+            cell.time.textColor = UIColor.red
+        }
         
         cell.lapCount.text = "Lap \(data.lapCount)"
         cell.time.text = data.lapTime
