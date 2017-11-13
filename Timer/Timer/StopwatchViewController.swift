@@ -93,7 +93,6 @@ class StopwatchViewController: UIViewController, UITableViewDelegate, UITableVie
         lapResetButton.isEnabled = false
         tableView.delegate = self
         tableView.dataSource = self
-        // Do any additional setup after loading the view.
     }
     
     func timerLabelFormat(time: TimeInterval) -> String {
@@ -122,12 +121,13 @@ class StopwatchViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         tableView.backgroundColor = UIColor.black
-
         return lapDatas.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
+        
+        tableView.scrollToRow(at: indexPath, at: UITableViewScrollPosition.bottom, animated: true)
+        
         let cellIdentifier = "cell"
         
         guard let cell = tableView.dequeueReusableCell (
